@@ -1,50 +1,86 @@
-# LTPP_EBQ_8_9
-This repository contains the R project and supporting materials for addressing 
-extension big questions 8 and 9.
+# 📊 LTPP_EBQ_8_9
 
-Respository Contents:
+**Quantifying Effects of Predation on Piping Plover Productivity and Evaluating Predator Management Effectiveness**
 
-Scripts
+This repository contains the R project and supporting materials for addressing **Extension Big Questions (EBQs) 8 and 9** of the **Platte River Recovery Implementation Program (PRRIP)** Extension Science Plan.
 
-Data
+---
 
+## 📁 Repository Contents
 
+- `scripts/` — R scripts for data cleaning, modeling, and visualization
+- `data/` — Input data and derived datasets used in the analyses
+- `outputs/` — Model outputs, figures, and result summaries (if applicable)
+- `.Rproj` — RStudio project file
+- `README.md` — You’re here
 
+---
 
-Data Analysis Outline:
+## 🎯 Project Background
 
-PLATTE RIVER RECOVERY IMPLEMENTATION PROGRAM (PRRIP -OR- Program)
-Data Analysis Outline—Quantifying Effects of Predation on Piping Plover Productivity 
-and Evaluating Effectiveness of Predator Management
+The **PRRIP** aims to improve the reproductive success of **piping plovers** (*Charadrius melodus*) along the central Platte River. In recent years, particularly **2018–2019**, plover fledge ratios (chicks fledged per breeding pair) reached record lows. In response, stakeholders prioritized understanding:
 
-The Platte River Recovery Implementation Program’s (PRRIP or Program) management 
-objective for the piping plover (Charadrius melodus; hereafter plover) is to improve 
-plover productivity along the central Platte River.  Plover fledge ratios 
-(chicks fledged per estimated breeding pair) are highly variable among years.  
-In 2018 and 2019, estimated plover fledge ratios reached the lowest values observed 
-during 2010–2019.  In response, Program stakeholders prioritized learning about the 
-impact of predation and our ability to mitigate those impacts at off-channel sand 
-and water (OCSW) nesting sites. Two of the Program Extension Science Plan’s 
-(PRRIP 2022a) Big Questions involve the role of predation on plover productivity.  
-Extension Big Question (EBQ) No. 8 asks: “how much of an effect does predation 
-have on plover productivity?” (PRRIP 2022a).  Associated learning objectives 
-for EBQ No. 8 include: 
+- The extent to which **predation affects plover productivity**
+- Whether **predator management practices** are effective at reducing those impacts
 
-(1) quantifying the impact of predation on plover productivity; 
-(2) identifying predator species responsible for losses; 
-(3) determining when losses occur (i.e., incubation; brood rearing); 
-and (4) using population models to predict the effect of decreasing fledge 
-ratios due to predation (PRRIP 2022a).  
+This work is structured around **Extension Big Questions 8 and 9** from the PRRIP Extension Science Plan (PRRIP 2022a).
 
-EBQ No. 9 queries: “how effective is Program management at mitigating losses of 
-plover productivity due to predation?” (PRRIP 2022a).  Associated learning 
-objectives for EBQ No. 9 include: 
+---
 
-(1) evaluating the effectiveness of trapping, fencing, and deterrent lighting 
-at reducing nest and brood failure due to predation; (2) developing predator 
-management alternatives based on learning through remote camera monitoring; 
-and (3) evaluating the necessity for additional predator management actions 
-based on plover response to predation over time (PRRIP 2022a).  Herein, we 
-provide a summary of the data collected to answer these EBQs and an outline of 
-data analysis approaches to quantifiably address the questions.
+## ❓ Big Questions
+
+### 🐣 EBQ 8: *"How much of an effect does predation have on plover productivity?"*
+
+**Learning Objectives:**
+1. Quantify the impact of predation on nest and brood productivity  
+2. Identify predator species responsible for losses  
+3. Determine the timing of losses (e.g., incubation, brood-rearing)  
+4. Use population models to predict long-term impacts of reduced productivity  
+
+---
+
+### 🛡️ EBQ 9: *"How effective is Program management at mitigating losses due to predation?"*
+
+**Learning Objectives:**
+1. Evaluate the effectiveness of trapping, fencing, and deterrent lighting  
+2. Develop management strategies based on camera monitoring  
+3. Assess long-term needs for predator management using observed plover responses  
+
+---
+
+## 🧪 Data Analysis Approach
+
+We outline statistical and modeling approaches to:
+- Quantify nest fate probabilities using **Bayesian Logistic Exposure Models**
+- Analyze BACI-style treatment effects for predator management
+- Integrate productivity metrics into population models for predictive inference
+
+All analysis scripts are reproducible and organized within the `scripts/` folder.
+
+---
+
+## 📚 References
+
+- PRRIP (2022a). *Extension Science Plan: Big Questions Framework*.  
+- Additional citations and documentation are included in the `docs/` folder if applicable.
+
+---
+
+## 🧭 Project Status
+
+> ✅ In Progress — Scripts and data are under development.  
+> 📦 Final models and results will be posted here upon completion.
+
+---
+
+## 📬 Contact
+
+For questions or collaboration requests, contact:
+
+**Josh Carrell**  
+Statistical Ecologist | Headwaters Corporation  
+📧 [Insert email]  
+🌐 [Insert project/research link]
+
+---
 

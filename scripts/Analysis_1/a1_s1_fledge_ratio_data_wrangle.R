@@ -10,7 +10,7 @@
 source("scripts/libraries.R")
 
 # data
-data <- read.csv("data/SiteSuccess.csv", header = T)
+data <- read.csv("data/raw/SiteSuccess.csv", header = T)
 head(data); str(data)
 
 ################################################################################
@@ -31,5 +31,12 @@ data <- data %>%
   mutate(Type = ifelse(Site %in% c("Kearney Broadfoot South",                   # Treatment vs control
                                    "Leaman",
                                    "Newark West"), 
-                                   "Treatment", "Control"))
+                                   "Treatment", "Control")) %>% 
+  filter(!is.na(PP_Fledge_Ratio_Nest), !is.infinite(PP_Fledge_Ratio_Nest)) %>%  # No Ratio to calculate
+  filter(!is.na(LT_Fledge_Ratio_Nest), !is.infinite(LT_Fledge_Ratio_Nest)) %>%
+  .[c(1, 2, 3, 23, 19:22)]
 
+
+# save
+write.csv(data, file = "data/analysis_1/flede_ratios.csv")
+save(data, file = "data/analysis_1/flede_ratios.RData")

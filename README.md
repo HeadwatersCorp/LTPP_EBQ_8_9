@@ -10,6 +10,8 @@ This repository contains the R project and supporting materials for addressing *
 
 - `scripts/` — R scripts for data cleaning, modeling, and visualization
   - `Analysis_1`
+      - `a1_s1_fledge_ratio_data_wrangle.R`: Converting Raw data log to data structure needed for BACI analysis
+  
   - `Analysis_2`
     - `a2_s1_nest_monitoring_log_data_wrangle.R`: Converting Raw data log to data structure needed for Modeling
   

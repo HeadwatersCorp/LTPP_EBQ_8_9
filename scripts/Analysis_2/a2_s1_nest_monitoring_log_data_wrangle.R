@@ -28,8 +28,9 @@ head(data, 5); str(data) # view raw data
   # Duration (Date final - Date first; Integer)
   # Camera Observations (Factor)
   # Time Monitored (Per nest; Integer)
-  
 
+
+# Dataset creation
 data_without_interval <- data %>% 
   filter(Site %in% c("OSG Lexington", "NPPD Lexington", "Dyer",
                      "Cottonwood Ranch", "Blue Hole", "Kearney Broadfoot South",
@@ -59,8 +60,11 @@ data_without_interval <- data %>%
     Chick.Status.Last, LT21_PP28_Last, used_X15,
     proportion_lost, camera_present, Species, Survey.year) %>%
   ungroup() %>% 
-  .[c(1, 12, 11, 2, 3:5, 6, 8, 7, 9, 10)]                                         # Subset columns
+  .[c(1, 12, 11, 2, 3:5, 6, 8, 7, 9, 10)]                                       # Subset columns
 
+
+
+# Rename
 names(data_without_interval) <- c("Nest", "Year", "Species", "Site",            # Rename
                                   "First_Date", "Last_Date", "Duration", 
                                   "Fate", "Chicks_First",

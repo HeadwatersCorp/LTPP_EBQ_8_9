@@ -9,7 +9,9 @@ This repository contains the R project and supporting materials for addressing *
 ## 📁 Repository Contents
 
 - `scripts/` — R scripts for data cleaning, modeling, and visualization
-  - `s1_nest_monitoring_log_data_wrangle.R`: Converting Raw data log to data structure needed for Modeling
+  - `Analysis_1`
+  - `Analysis_2`
+    - `a2_s1_nest_monitoring_log_data_wrangle.R`: Converting Raw data log to data structure needed for Modeling
   
 - `data/` — Input data and derived datasets used in the analyses
 - `outputs/` — Model outputs, figures, and result summaries (if applicable)

@@ -58,6 +58,11 @@ data_without_interval <- data %>%
     Nest, Site, first, last, duration_n_days,
     Chick.Status.Last, LT21_PP28_Last, used_X15,
     proportion_lost, camera_present, Species, Survey.year) %>%
-  ungroup()
+  ungroup() %>% 
+  .[c(1, 12, 11, 2, 3:5, 6, 8, 7, 9, 10)]                                         # Subset columns
 
-
+names(data_without_interval) <- c("Nest", "Year", "Species", "Site",            # Rename
+                                  "First_Date", "Last_Date", "Duration", 
+                                  "Fate", "Chicks_First",
+                                  "Chicks_Last", "Proporation_Lost",
+                                  "Camera")

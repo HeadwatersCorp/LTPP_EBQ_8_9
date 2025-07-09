@@ -4,8 +4,6 @@
 ################################################################################
 ################################################################################
 
-# last_update: 07/08/2025
-
 # load libraries
 source("scripts/libraries.R")
 
@@ -38,5 +36,5 @@ data <- data %>%
 
 
 # save
-write.csv(data, file = "data/analysis_1/flede_ratios.csv")
-save(data, file = "data/analysis_1/flede_ratios.RData")
+write.csv(data, file = "data/analysis_1/fledge_ratios.csv")
+save(data, file = "data/analysis_1/fledge_ratios.RData")

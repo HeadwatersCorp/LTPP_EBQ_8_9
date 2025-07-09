@@ -10,7 +10,9 @@ libraries <- c(
   "data.table",  # For data manipulation efficiency
   "coda",        # For diagnostics of MCMC chains
   "sf",          # For spatial handling and analysis
-  "terra"        # For spatial raster handling and analysis
+  "terra",       # For spatial raster handling and analysis
+  "gridExtra",   # Viewing mulitple plots from ggplot on same graph
+  "Cairo"        # High Quality Images
 )
 
 # Function to load libraries

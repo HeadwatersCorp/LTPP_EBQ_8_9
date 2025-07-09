@@ -10,7 +10,7 @@
 source("scripts/libraries.R")
 
 # Load LTPP Nest monitoring log data
-data <- read.csv("data/ltppNestMonitoringLog.csv", header = T) # Monitoring log
+data <- read.csv("data/raw/ltppNestMonitoringLog.csv", header = T) # Monitoring log
 head(data, 5); str(data) # view raw data
 
 
@@ -70,3 +70,7 @@ names(data_without_interval) <- c("Nest", "Year", "Species", "Site",            
                                   "Fate", "Chicks_First",
                                   "Chicks_Last", "Proporation_Lost",
                                   "Camera")
+
+# Save
+write.csv(data_without_interval, file = "data/analysis_2/nest_fate_without_interval.csv")
+save(data_without_interval, file = "data/analysis_2/nest_fate_without_interval.RData")

@@ -9,11 +9,17 @@ This repository contains the R project and supporting materials for addressing *
 ## 📁 Repository Contents
 
 - `scripts/` — R scripts for data cleaning, modeling, and visualization
-  - `Analysis_1`
+  - **Analysis_1**
       - `a1_s1_fledge_ratio_data_wrangle.R`: Converting Raw data log to data structure needed for BACI analysis
-  
-  - `Analysis_2`
+      - `a1_s2_fledge_ratio_basic_BACI_design_visualization.R`: Visualizations of a classic BACI design
+ 
+  - **Analysis_2**
     - `a2_s1_nest_monitoring_log_data_wrangle.R`: Converting Raw data log to data structure needed for Modeling
+  
+  - **functions**: Contains functions built to be sourced into analysis scripts
+    - `a1_visualization.R`: Functions for the visualizations for analysis 1
+    - `libraries.R`: Library function to be sourced into scripts
+  
   
 - `data/` — Input data and derived datasets used in the analyses
 - `outputs/` — Model outputs, figures, and result summaries (if applicable)

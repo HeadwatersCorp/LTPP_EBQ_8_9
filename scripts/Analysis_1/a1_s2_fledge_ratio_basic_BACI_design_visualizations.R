@@ -12,17 +12,6 @@ source("scripts/functions/a1_visualization.R")
 data <- read.csv("data/analysis_1/fledge_ratios.csv")
 head(data,5); str(data); names(data) # examine
 
-################################################################################
-
-# Summarizing means
-data %>%
-  mutate(Time = factor(Time, levels = c("Before", "After"))) %>% # Order before, after
-  group_by(Type, Time) %>% # group by Control/Treatment, Before/After
-  summarise(
-    mean = mean(PP_Fledge_Ratio_Nest, na.rm = TRUE), # mean
-    sd = sd(PP_Fledge_Ratio_Nest, na.rm = TRUE), # std. dev.
-    .groups = "drop"
-  )
 
 ### Boxplots ###################################################################
 

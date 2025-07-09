@@ -1,0 +1,132 @@
+
+---
+title: "🌸 Iris Flower Analysis"
+subtitle: "An Interactive Exploratory Data Report"
+author: "Headwaters Analytics"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    theme: flatly
+    code_folding: show
+    toc: true
+    toc_float: true
+    number_sections: true
+    df_print: paged
+    highlight: tango
+    css: styles.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(DT)
+library(ggplot2)
+library(crosstalk)
+```
+
+## 📝 Introduction
+
+This report provides a stylized analysis of the classic `iris` dataset. The report features interactive elements, code folding, and visual summaries.
+
+---
+
+## 📋 Data Overview
+
+### Raw Data Table
+
+```{r iris-datatable}
+datatable(iris, options = list(pageLength = 5, autoWidth = TRUE))
+```
+
+### Summary Statistics
+
+```{r summary-table}
+iris %>%
+  group_by(Species) %>%
+  summarise(
+    Sepal.Length.Mean = mean(Sepal.Length),
+    Sepal.Width.Mean = mean(Sepal.Width),
+    Petal.Length.Mean = mean(Petal.Length),
+    Petal.Width.Mean = mean(Petal.Width),
+    .groups = "drop"
+  ) %>%
+  knitr::kable(caption = "Mean Measurements by Species")
+```
+
+---
+
+## 📊 Visual Exploration
+
+#### Sepal Dimensions {.tabset}
+
+```{r sepal-length}
+ggplot(iris, aes(x = Species, y = Sepal.Length, fill = Species)) +
+  geom_boxplot() +
+  labs(title = "Sepal Length by Species")
+```
+
+```{r sepal-width}
+ggplot(iris, aes(x = Species, y = Sepal.Width, fill = Species)) +
+  geom_boxplot() +
+  labs(title = "Sepal Width by Species")
+```
+
+#### Petal Dimensions {.tabset}
+
+```{r petal-length}
+ggplot(iris, aes(x = Species, y = Petal.Length, fill = Species)) +
+  geom_boxplot() +
+  labs(title = "Petal Length by Species")
+```
+
+```{r petal-width}
+ggplot(iris, aes(x = Species, y = Petal.Width, fill = Species)) +
+  geom_boxplot() +
+  labs(title = "Petal Width by Species")
+```
+
+---
+
+## 🔍 Filtered Exploration
+
+Use this to filter the dataset by species interactively:
+
+```{r iris-filter}
+shared_iris <- SharedData$new(iris)
+
+filter_select("species_filter", "Filter by Species:", shared_iris, ~Species)
+
+datatable(shared_iris, options = list(pageLength = 5))
+```
+
+---
+
+## 💾 Download Options
+
+```{r download-button, results='asis'}
+library(htmltools)  # Ensure it's loaded here too
+
+downloadLink <- function(object, label = "Download CSV") {
+  HTML(paste0(
+    '<a class="btn btn-success" href="data:text/csv;charset=utf-8,',
+    URLencode(paste(capture.output(write.csv(object, row.names = FALSE)), collapse = "\n")),
+    '" download="iris_filtered.csv">',
+    label, '</a>'
+  ))
+}
+
+downloadLink(iris)
+```
+---
+
+## 🧠 Conclusion
+
+This R Markdown demonstrates a feature-rich, interactive, and professional HTML report built entirely with base R Markdown and a few handy libraries.
+
+---
+
+## 📦 Session Info
+
+```{r session-info}
+sessionInfo()
+```

@@ -1,0 +1,18 @@
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h1, h2, h3, h4 {
+  color: #1b4d3e;
+}
+
+a.btn-success {
+  margin-top: 1em;
+  display: inline-block;
+  background-color: #1b4d3e;
+  color: white !important;
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  text-decoration: none;
+}

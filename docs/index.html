@@ -352,47 +352,93 @@ display: none;
 </div>
 
 
-&lt;!DOCTYPE html&gt;
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>
-Index
+📊 Report Index | Headwaters
 </title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body {
-font-family: Arial, sans-serif;
-padding: 2em;
-background-color: #f6f8fa;
-color: #333;
+margin: 0;
+font-family: "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+background-color: #f4f6f9;
+color: #2e3a59;
+line-height: 1.6;
 }
-h1 {
-color: #2c3e50;
+header {
+background-color: #1b4d3e;
+color: white;
+padding: 1.5em 2em;
+text-align: center;
+box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-ul {
-line-height: 1.8em;
+header h1 {
+margin: 0;
+font-size: 2rem;
 }
-a {
+main {
+max-width: 800px;
+margin: 2em auto;
+padding: 0 1em;
+}
+.report-list {
+list-style: none;
+padding: 0;
+}
+.report-list li {
+background: white;
+margin-bottom: 1em;
+padding: 1em 1.5em;
+border-left: 4px solid #007acc;
+border-radius: 6px;
+box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+transition: transform 0.1s ease-in-out;
+}
+.report-list li:hover {
+transform: translateX(4px);
+}
+.report-list a {
 color: #007acc;
+font-weight: bold;
+font-size: 1.1em;
 text-decoration: none;
 }
-a:hover {
+.report-list a:hover {
 text-decoration: underline;
+}
+footer {
+text-align: center;
+font-size: 0.85em;
+padding: 2em 1em;
+color: #777;
 }
 </style>
 </head>
 <body>
+<header>
 <h1>
-Index
+📁 Report Dashboard
 </h1>
 <p>
-Select a report below:
+Browse available HTML reports
 </p>
-<ul>
+</header>
+<main>
+<ul class="report-list">
 <li>
-<a href="test.html">Here is an html</a>
+<a href="test.html">Piping Plover Monitoring Report</a>
 </li>
+<li>
+<a href="example.html">Least Tern Productivity Summary</a>
+</li>
+<!-- Add more links as needed -->
 </ul>
+</main>
+<footer>
+© 2025 Headwaters Corporation | Data &amp; Analytics
+</footer>
 </body>
 </html>
 

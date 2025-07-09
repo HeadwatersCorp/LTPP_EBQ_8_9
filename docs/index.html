@@ -352,61 +352,68 @@ display: none;
 </div>
 
 
+&lt;!DOCTYPE html&gt;
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>
-📊 Report Index | Headwaters
+📊 Report Dashboard | Headwaters
 </title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body {
-margin: 0;
 font-family: "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
 background-color: #f4f6f9;
 color: #2e3a59;
-line-height: 1.6;
+margin: 0;
+padding: 0;
 }
 header {
 background-color: #1b4d3e;
 color: white;
 padding: 1.5em 2em;
 text-align: center;
-box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 header h1 {
 margin: 0;
 font-size: 2rem;
 }
-main {
-max-width: 800px;
-margin: 2em auto;
-padding: 0 1em;
+nav {
+background-color: #e2e8f0;
+border-bottom: 1px solid #ccc;
+padding: 0.5em 1em;
 }
-.report-list {
+nav ul {
 list-style: none;
+margin: 0;
 padding: 0;
+display: flex;
+gap: 1em;
 }
-.report-list li {
-background: white;
-margin-bottom: 1em;
-padding: 1em 1.5em;
-border-left: 4px solid #007acc;
-border-radius: 6px;
-box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-transition: transform 0.1s ease-in-out;
+nav li {
+margin: 0;
 }
-.report-list li:hover {
-transform: translateX(4px);
-}
-.report-list a {
-color: #007acc;
-font-weight: bold;
-font-size: 1.1em;
+nav a {
+display: inline-block;
+padding: 0.5em 1em;
+background-color: white;
+border-radius: 6px 6px 0 0;
 text-decoration: none;
+color: #007acc;
+border: 1px solid #ccc;
+border-bottom: none;
 }
-.report-list a:hover {
-text-decoration: underline;
+nav a:hover {
+background-color: #f0f4f8;
+}
+main {
+padding: 2em;
+max-width: 800px;
+margin: auto;
+background-color: white;
+border: 1px solid #ccc;
+border-top: none;
+border-radius: 0 0 6px 6px;
 }
 footer {
 text-align: center;
@@ -419,25 +426,36 @@ color: #777;
 <body>
 <header>
 <h1>
-📁 Report Dashboard
+📁 Headwaters Reports
 </h1>
 <p>
-Browse available HTML reports
+Select a report from the tabs below
 </p>
 </header>
-<main>
-<ul class="report-list">
+<nav>
+<ul>
 <li>
-<a href="test.html">Piping Plover Monitoring Report</a>
+<a href="iris_report.html">Iris HTML Report</a>
 </li>
 <li>
-<a href="example.html">Least Tern Productivity Summary</a>
+<a href="example.html">Least Tern Example</a>
 </li>
-<!-- Add more links as needed -->
+<li>
+<a href="plover_analysis.html">Plover BACI Output</a>
+</li>
 </ul>
+</nav>
+<main>
+<h2>
+Welcome
+</h2>
+<p>
+This is the index page. Use the navigation above to access interactive
+HTML reports generated from R Markdown.
+</p>
 </main>
 <footer>
-© 2025 Headwaters Corporation | Data &amp; Analytics
+© 2025 Headwaters Corporation | Science &amp; Data Group
 </footer>
 </body>
 </html>

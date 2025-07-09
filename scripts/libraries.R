@@ -11,8 +11,9 @@ libraries <- c(
   "coda",        # For diagnostics of MCMC chains
   "sf",          # For spatial handling and analysis
   "terra",       # For spatial raster handling and analysis
-  "gridExtra",   # Viewing mulitple plots from ggplot on same graph
-  "Cairo"        # High Quality Images
+  "gridExtra",   # Viewing multiple plots from ggplot on same graph
+  "Cairo",      # High Quality Images
+  "pander"
 )
 
 # Function to load libraries

@@ -76,6 +76,7 @@ All analysis scripts are reproducible and organized within the `scripts/` folder
 
 > ✅ In Progress — Scripts and data are under development.  
 > 📦 Final models and results will be posted here upon completion.
+> I can even show rmarkdowns: [example here](scripts/Markdown/exmplae.html)
 
 ---
 

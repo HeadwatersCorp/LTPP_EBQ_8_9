@@ -1,0 +1,352 @@
+---
+title: "LTPP Before-After-Control-Impact"
+date: "Last Update: `r Sys.Date()`"
+output:
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_float: true
+    toc_depth: 4
+    code_folding: hide
+    number_sections: false
+    df_print: paged
+    css: headwaters.css
+    includes:
+      before_body: logo.html
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,       # show code
+  warning = FALSE,   # hide warnings
+  message = FALSE    # hide messages
+)
+# To source from other folders
+library(here)
+```
+
+```{r, echo=FALSE, results='hide'}
+# load libraries
+source(here("scripts", "libraries.R"))
+source(here("scripts", "functions", "a1_baci.R"))
+source(here("scripts", "functions", "a1_visualization.R"))
+
+# load data
+data <- read.csv(here("data/analysis_1/fledge_ratios.csv"))
+head(data,5); str(data); names(data) # examine
+```
+
+
+---
+
+# BACI Design
+
+The basic Before-After-Control-Impact (BACI) analysis compares the group means of a given metric across for two groups across two time periods, generally split by the implementation of a management treatment. BACI analysis is implemented as:
+
+$$
+\text{BACI Effect} = (\hat{Y}_{TA} - \hat{Y}_{TB}) - (\hat{Y}_{CA} - \hat{Y}_{CB})
+$$
+
+where $\hat{Y}$ represents the group means of $[{TA}, {TB}, {CA}, {CB}]$, which represent the treatment and control groups before and after management implementation, respectively. 
+
+Here, we implement a basic BACI design to examine the effect of predation management treatments on the mean fledge ratio for both the piping plover (Charadrius melodus; PP) and the interior least tern (Sternula antillarum athalassos; lt) across two time periods (2010-2020 | 2021-2024), where trends can be seen below:
+
+
+```{r, fig.width=12, fig.height=8, out.width="100%"}
+pp_b1 <- plot_baci_boxplot(
+  data = data,
+  yvar = PP_Fledge_Ratio_Nest,
+  title = "Piping Plover Fledge Ratios (Per Nest)",
+  subtitle = "Comparison of control and treatment sites",
+  ylabel = "Fledge Ratios (Nest)"
+)
+
+
+pp_b2 <- plot_baci_boxplot(
+  data = data,
+  yvar = PP_Fledge_Ratio_BPE,
+  title = "Piping Plover Fledge Ratios (BPE)",
+  subtitle = "Comparison of control and treatment sites",
+  ylabel = "Fledge Ratios (BPE)"
+)
+
+lt_b1 <- plot_baci_boxplot(
+  data = data,
+  yvar = LT_Fledge_Ratio_Nest,
+  title = "Least Tern Fledge Ratios (Per Nest)",
+  subtitle = "Comparison of control and treatment sites",
+  ylabel = "Fledge Ratios (Nest)"
+)
+
+lt_b2 <- plot_baci_boxplot(
+  data = data,
+  yvar = LT_Fledge_Ratio_BPE,
+  title = "Least Tern Fledge Ratios (BPE)",
+  subtitle = "Comparison of control and treatment sites",
+  ylabel = "Fledge Ratios (BPE)"
+)
+
+grid.arrange(pp_b1, pp_b2, lt_b1, lt_b2)
+```
+
+```{r, message=FALSE, echo=FALSE}
+### Create trends ##############################################################
+
+# Prepare trend data for PP_Fledge_Ratio_Nest
+pp_nest_summary <- trend_plot_prep(data, PP_Fledge_Ratio_Nest)
+# PP BPE
+pp_bpe_summary <- trend_plot_prep(data, PP_Fledge_Ratio_BPE)
+# LT_Fledge_Ratio_Nest
+lt_nest_summary <- trend_plot_prep(data, LT_Fledge_Ratio_Nest)
+# LT BPE
+lt_bpe_summary <- trend_plot_prep(data, LT_Fledge_Ratio_BPE)
+
+
+### Plot Trends ################################################################
+
+### PP Nest
+p1 <- plot_baci_trend(pp_nest_summary,
+                title = "Piping Plover Fledge Ratio (Per Nest)",
+                ylabel = "Mean Fledge Ratio (Nest)")
+
+### PP BPE
+p2 <- plot_baci_trend(pp_bpe_summary,
+                title = "Piping Plover Fledge Ratio (BPE)",
+                ylabel = "Mean Fledge Ratio (BPE)")
+
+### LT Nest
+l1 <- plot_baci_trend(lt_nest_summary,
+                title = "Least Tern Fledge Ratio (Per Nest)",
+                ylabel = "Mean Fledge Ratio (Nest)")
+
+### LT BPE
+l2 <- plot_baci_trend(lt_bpe_summary,
+                title = "Least Tern Fledge Ratio (BPE)",
+                ylabel = "Mean Fledge Ratio (BPE)")
+
+
+# Piping Plover Plots
+pp_trends <- grid.arrange(p1, p2)
+
+# Least Tern Plots
+lt_trends <- grid.arrange(l1, l2)
+```
+
+
+---
+
+
+# Data
+
+Data used for analysis is summarized with fledge ratio for both the nest and breeding pair estimate level, calculated as:
+
+$$
+\text{Fledge Ratio}_{\text{NEST}} = \frac{\text{Fledglings}}{\text{Nests Hatched}} \qquad
+\text{Fledge Ratio}_{\text{BPE}} = \frac{\text{Fledglings}}{\text{Breeding Pairs}}
+$$
+Raw data can be viewed below:
+```{r}
+DT::datatable(
+  data,
+  options = list(
+    scrollX = TRUE,
+    pageLength = 5
+  ),
+  class = 'nowrap display'
+)
+
+```
+
+
+To summarize group means, ratios were grouped by treatment or control and before or after management implementation. These ratios are used in the BACI design. for the fledge ratio of PP per Nest,
+
+```{r}
+baci_summary <- data %>%
+  group_by(Type, Time) %>%
+  summarise(
+    mean_ratio = mean(PP_Fledge_Ratio_Nest, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+# Pull mean ratio values from treatments and time periods
+m_tb <- baci_summary %>% 
+  filter(Type == "Treatment", 
+         Time == "Before") %>% 
+  pull(mean_ratio)
+
+m_ta <- baci_summary %>% 
+  filter(Type == "Treatment", 
+         Time == "After")  %>% 
+  pull(mean_ratio)
+
+m_cb <- baci_summary %>% 
+  filter(Type == "Control",   
+         Time == "Before") %>% 
+  pull(mean_ratio)
+
+m_ca <- baci_summary %>% 
+  filter(Type == "Control",   
+         Time == "After")  %>% 
+  pull(mean_ratio)
+
+# Compute BACI effect
+baci_effect <- (m_ta - m_tb) - (m_ca - m_cb) # (-,0,+) = (negative, zero, postive effect)
+
+```
+$$
+\begin{aligned}
+\text{BACI Effect} &= (\hat{Y}_{TA} - \hat{Y}_{TB}) - (\hat{Y}_{CA} - \hat{Y}_{CB}) \\
+&= (0.706 - 0.799) - (0.988 - 1.191) \\
+&= (-0.093) - (-0.203) \\
+&= \boxed{0.111}
+\end{aligned}
+$$
+
+## BACI Result
+
+A point estimate of 0.111, indicates that a positive yet low magnitude effect of the predation management treatment on PP fledge ratios (nest).
+
+### Bootstrapping
+
+Our estimated BACI effect of 0.111 suggests a positive impact of the management treatment on Piping Plover fledge ratios. However, given the limited sample size, this point estimate alone does not convey the uncertainty associated with our result. To better understand the variability and robustness of the BACI effect, we implemented a bootstrap procedure with 1,000 iterations. This allowed us to generate a sampling distribution of the BACI effect and estimate a 95% confidence interval, providing insight into the range of plausible treatment effects under the observed data.
+
+#### Results
+
+Although the estimated BACI effect was positive (0.126), the 95% bootstrap confidence interval ranged from –0.561 to 0.804. Because this interval includes 0, we cannot rule out the possibility that the observed effect was due to chance. 
+
+```{r}
+
+# Bootstrap BACI function
+bootstrap_baci <- function(data, n_iter = 1000) {
+  baci_values <- numeric(n_iter)
+  
+  for (i in 1:n_iter) {
+    # Resample with replacement
+    boot_data <- data %>% 
+      group_by(Type, Time) %>%
+      sample_frac(replace = TRUE) %>%
+      ungroup()
+    
+    # Compute group means
+    means <- boot_data %>%
+      group_by(Type, Time) %>%
+      summarise(
+        mean_ratio = mean(PP_Fledge_Ratio_Nest, na.rm = TRUE),
+        .groups = "drop"
+      )
+    
+    # Extract group means
+    m_tb <- means %>% filter(Type == "Treatment", Time == "Before") %>% pull(mean_ratio)
+    m_ta <- means %>% filter(Type == "Treatment", Time == "After")  %>% pull(mean_ratio)
+    m_cb <- means %>% filter(Type == "Control",   Time == "Before") %>% pull(mean_ratio)
+    m_ca <- means %>% filter(Type == "Control",   Time == "After")  %>% pull(mean_ratio)
+    
+    # Compute BACI
+    baci_values[i] <- (m_ta - m_tb) - (m_ca - m_cb)
+  }
+  
+  return(baci_values)
+}
+
+# Run bootstrap
+set.seed(1234)  # for reproducibility
+baci_boot <- bootstrap_baci(data, n_iter = 1000)
+
+# Estimate 95% CI
+ci <- quantile(baci_boot, probs = c(0.025, 0.975))
+mean_baci <- mean(baci_boot)
+```
+```{r}
+# Turn bootstrap samples into a data frame
+baci_df <- data.frame(BACI = baci_boot)
+
+# Calculate 95% CI again for plotting reference lines
+ci <- quantile(baci_boot, probs = c(0.025, 0.975))
+mean_baci <- mean(baci_boot)
+
+# Plot
+ggplot(baci_df, aes(x = BACI)) +
+  geom_histogram(color = "white", fill = "#2A9D8F", bins = 40, alpha = 0.8) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "black", size = 1) +
+  geom_vline(xintercept = mean_baci, color = "#E76F51", size = 1.2) +
+  geom_vline(xintercept = ci, linetype = "dotted", color = "gray40", size = 1) +
+  theme_minimal(base_size = 14) +
+  labs(
+    title = "Bootstrap Distribution of BACI Effect",
+    subtitle = paste0("Mean = ", round(mean_baci, 3), 
+                      " | 95% CI = [", round(ci[1], 3), ", ", round(ci[2], 3), "]"),
+    x = "BACI Effect",
+    y = "Frequency"
+  )
+
+```
+
+
+---
+
+
+# Wilcoxon Signed-Rank test of Significance for Paired Data
+
+BACI analysis indicates the direction and magnitude of a treatment effect, while a Wilcoxon Signed-Rank test will test the significance differences between two groups. Below, fledge ratio for PP nests is shown:
+
+
+\begin{aligned}
+&\textbf{(1) Control Before vs After:} \\
+&\quad H_0: \text{Fledge ratio}_{\text{nest, Control, Before}} = \text{Fledge ratio}_{\text{nest, Control, After}} \\
+&\quad H_A: \text{Fledge ratio}_{\text{nest, Control, Before}} \neq \text{Fledge ratio}_{\text{nest, Control, After}} \\
+&\quad W = W_1,\ p = p_1 \\[1em]
+
+&\textbf{(2) Treatment Before vs After:} \\
+&\quad H_0: \text{Fledge ratio}_{\text{nest, Treatment, Before}} = \text{Fledge ratio}_{\text{nest, Treatment, After}} \\
+&\quad H_A: \text{Fledge ratio}_{\text{nest, Treatment, Before}} \neq \text{Fledge ratio}_{\text{nest, Treatment, After}} \\
+&\quad W = W_2,\ p = p_2 \\[1em]
+
+&\textbf{(3) Control vs Treatment (Before):} \\
+&\quad H_0: \text{Fledge ratio}_{\text{nest, Control, Before}} = \text{Fledge ratio}_{\text{nest, Treatment, Before}} \\
+&\quad H_A: \text{Fledge ratio}_{\text{nest, Control, Before}} \neq \text{Fledge ratio}_{\text{nest, Treatment, Before}} \\
+&\quad W = W_3,\ p = p_3 \\[1em]
+
+&\textbf{(4) Control vs Treatment (After):} \\
+&\quad H_0: \text{Fledge ratio}_{\text{nest, Control, After}} = \text{Fledge ratio}_{\text{nest, Treatment, After}} \\
+&\quad H_A: \text{Fledge ratio}_{\text{nest, Control, After}} \neq \text{Fledge ratio}_{\text{nest, Treatment, After}} \\
+&\quad W = W_4,\ p = p_4
+\end{aligned}
+
+
+## Wilcoxon Rank Results
+
+```{r}
+wilcox_table <- bind_rows(
+  get_wilcox_results(filter(data, Type == "Control"), PP_Fledge_Ratio_Nest ~ Time, "Control Before vs After"),
+  get_wilcox_results(filter(data, Type == "Treatment"), PP_Fledge_Ratio_Nest ~ Time, "Treatment Before vs After"),
+  get_wilcox_results(filter(data, Time == "Before"), PP_Fledge_Ratio_Nest ~ Type, "Control vs Treatment (Before)"),
+  get_wilcox_results(filter(data, Time == "After"), PP_Fledge_Ratio_Nest ~ Type, "Control vs Treatment (After)")
+)
+
+# View table
+pander(wilcox_table)
+```
+
+Statistically significant difference was detected between treatment and control sites prior to predator management (p = 0.0203) for PP fledge ratios. This pre-existing disparity limits our ability to attribute any subsequent changes to the management intervention alone. Additionally, this may be a design artifact that violates the assumption that groups must be equivalent pre-treatment. 
+
+---
+
+# Results & Next Steps
+
+While BACI analysis indicated a positive effect of treatment on fledge ratios, the bootstrapping analysis indicated it is possible that the observed effect was due to chance. However, this does not indicate that the treatment did not help, but rather there is possible high variance among fledge ratios, a small number of treatment years, and natural variability found in nature. 
+
+Although the direction of the BACI estimate is encouraging, the uncertainty highlights a need for continued data collection (2025 season data), or a different modeling approach to better assess treatment effects under ecological variability. Next steps include the following:
+
+- A BACIPS design for paired series (treats groups as time series to compare trends, not simple estimates)
+
+- Mixed effect models (allows for random intercepts that account for possible site-level variance)
+
+- Bayesian BACI (directly quantifies probability, allowing for more direct interpreability) 
+
+---
+
+<div class="footer">
+  <img src="headwaters-icon.png" style="height: 20px; vertical-align: middle; margin-right: 5px;">
+  <span style="color: var(--gold);">© 2025</span> <strong>Headwaters Corporation</strong>. All rights reserved.
+</div>
